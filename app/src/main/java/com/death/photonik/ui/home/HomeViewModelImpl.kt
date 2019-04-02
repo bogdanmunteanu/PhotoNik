@@ -5,8 +5,10 @@ import com.death.instagram.utils.rx.SchedulerProvider
 import com.death.photonik.data.model.Photos
 import com.death.photonik.data.repository.PhotoRepository
 import com.death.photonik.ui.base.BaseViewModelImpl
+import com.death.photonik.utils.common.Event
 import com.death.photonik.utils.common.Resource
 import io.reactivex.disposables.CompositeDisposable
+import java.util.concurrent.atomic.AtomicBoolean
 
 class HomeViewModelImpl constructor(
     schedulerProvider: SchedulerProvider,
@@ -15,12 +17,13 @@ class HomeViewModelImpl constructor(
 ) : BaseViewModelImpl(schedulerProvider, compositeDisposable), HomeViewModel {
     override val onNetworkError: MutableLiveData<Resource<String>> = MutableLiveData()
     override val loading: MutableLiveData<Boolean> = MutableLiveData()
-    override val onNetworkResponse: MutableLiveData<Photos> = MutableLiveData()
-
+    override val onNetworkResponse: MutableLiveData<Event<Photos>> = MutableLiveData()
+    val isHandled = AtomicBoolean(false)
     override fun onViewCreated() {
-        getPhotos()
+        if(!isHandled.get()){
+            getPhotos()
+        }
     }
-
 
     fun getPhotos() {
         loading.postValue(true)
@@ -28,8 +31,9 @@ class HomeViewModelImpl constructor(
             photoRepository.getPhoto()
                 .subscribeOn(schedulerProvider.io())
                 .subscribe({
+                    isHandled.set(true)
                     loading.postValue(false)
-                    onNetworkResponse.postValue(it)
+                    onNetworkResponse.postValue(Event(it))
                 }, {
                     loading.postValue(false)
                     onNetworkError.postValue(Resource.error("Something went wrong"))
