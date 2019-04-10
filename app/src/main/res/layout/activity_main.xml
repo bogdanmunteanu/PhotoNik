@@ -13,16 +13,20 @@
         <androidx.recyclerview.widget.RecyclerView
                 android:layout_width="0dp"
                 android:layout_height="0dp"
+                android:id="@+id/photos"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintVertical_bias="0.0"/>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_margin="16dp"
+                android:id="@+id/addPhoto"
                 android:src="@drawable/ic_add"
+                android:transitionName="add"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 

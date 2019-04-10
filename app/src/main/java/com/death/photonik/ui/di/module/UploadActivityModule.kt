@@ -10,26 +10,24 @@ import com.death.photonik.ui.home.HomeViewModel
 import com.death.photonik.ui.home.HomeViewModelImpl
 import com.death.photonik.ui.home.HomeActivity
 import com.death.photonik.ui.home.adapter.PhotoAdapter
+import com.death.photonik.ui.upload.UploadActivity
+import com.death.photonik.ui.upload.UploadVModel
+import com.death.photonik.ui.upload.UploadViewModelImpl
 import com.death.photonik.utils.common.ViewModelProviderFactory
 import dagger.Module
 import dagger.Provides
 import io.reactivex.disposables.CompositeDisposable
 
 @Module
-class HomeActivityModule(private val activity: HomeActivity): BaseActivityModule(activity){
+class UploadActivityModule(private val activity: UploadActivity): BaseActivityModule(activity){
 
     @Provides
-    fun provideHomeViewModel(
+    fun provideUploadViewModel(
         schedulerProvider: SchedulerProvider,
         compositeDisposable: CompositeDisposable,
         photoRepository: PhotoRepository
-    ):HomeViewModel = ViewModelProviders.of(activity, ViewModelProviderFactory(HomeViewModelImpl::class){
-        HomeViewModelImpl(schedulerProvider, compositeDisposable, photoRepository)
-    }).get(HomeViewModelImpl::class.java)
+    ):UploadVModel = ViewModelProviders.of(activity, ViewModelProviderFactory(UploadViewModelImpl::class){
+        UploadViewModelImpl(schedulerProvider, compositeDisposable, photoRepository)
+    }).get(UploadViewModelImpl::class.java)
 
-    @Provides
-    fun provideStaggeredGridLayoutManager(activity: BaseActivity<*, *>): StaggeredGridLayoutManager = StaggeredGridLayoutManager(2, RecyclerView.VERTICAL)
-
-    @Provides
-    fun provideAdapter() = PhotoAdapter(ArrayList(), activity)
 }

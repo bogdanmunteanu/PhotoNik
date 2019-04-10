@@ -49,7 +49,7 @@ abstract class BaseActivity<B: ViewDataBinding, VM: BaseViewModel>: AppCompatAct
         setupObservers()
     }
     
-    fun setupObservers(){
+    protected open fun setupObservers(){
         viewModel.getMessage().observe(this, Observer {
             it.data?.run {
                 showMessage(this)

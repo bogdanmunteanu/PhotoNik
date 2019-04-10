@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable name="viewModel" type="com.death.photonik.ui.home.adapter.PhotoAdapter.PhotoViewModel"/>
+    </data>
+    <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:elevation="4dp"
+            app:cardElevation="4dp">
+
+        <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            <ImageView
+                    android:id="@+id/poster"
+                    android:scaleType="centerCrop"
+                    android:maxHeight="250dp"
+                    android:transitionName="image"
+                    android:layout_width="match_parent"
+                    android:layout_height="200dp"/>
+
+            <TextView
+                    android:id="@+id/description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:maxLines="3"
+                    android:transitionName="title"
+                    android:gravity="fill_horizontal"
+                    android:textColor="@android:color/black"
+                    android:layout_below="@+id/poster"
+                    android:padding="8dp"
+                    android:text="@{viewModel.data.description}"
+                    android:textSize="18sp"/>
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+</layout>
